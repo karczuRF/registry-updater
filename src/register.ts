@@ -57,7 +57,7 @@ export function addTappletToRegistry(): RegistryUpdaterOutputs {
   // Search for all manifest.json files and extract fields
   const tappPath = path.join('.')
   const tappletManifestFiles = findManifestFiles(tappPath)
-  console.log(tappletManifestFiles)
+
   for (const file of tappletManifestFiles) {
     console.log(file)
     const tappletManifest: TappletManifest = JSON.parse(
@@ -65,9 +65,10 @@ export function addTappletToRegistry(): RegistryUpdaterOutputs {
     )
     const packageName = tappletManifest.packageName
     const displayName = tappletManifest.displayName
-    const authorName = tappletManifest.author.name
-    const authorWebsite = tappletManifest.author.website
-    const codeowners = tappletManifest.repository.codeowners[0]
+    const author = tappletManifest.author
+    const about = tappletManifest.about
+    const audits = tappletManifest.audits
+    const codeowners = tappletManifest.repository.codeowners
     const category = tappletManifest.category
     const logoPath = tappletManifest.design.logoPath
     const version = tappletManifest.version
@@ -87,12 +88,10 @@ export function addTappletToRegistry(): RegistryUpdaterOutputs {
         id: packageName,
         metadata: {
           displayName,
-          author: {
-            name: authorName,
-            website: authorWebsite
-          },
-          codeowners: [codeowners],
-          audits: [],
+          author,
+          about,
+          codeowners,
+          audits,
           category,
           logoPath
         },
@@ -104,7 +103,9 @@ export function addTappletToRegistry(): RegistryUpdaterOutputs {
         }
       }
     }
-    addAndFormatCodeowners(packageName, [codeowners])
+
+    // Add codeowners
+    addAndFormatCodeowners(packageName, codeowners)
   }
 
   fs.writeFileSync(
