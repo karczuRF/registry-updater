@@ -7,6 +7,8 @@ import {
   TappletManifest
 } from './types/registry'
 
+const TAPPLETS_REGISTRY_MANIFEST_FILE = 'tapplets-registry.manifest.json'
+
 const findManifestFiles = (dir: string): string[] => {
   const manifestFiles: string[] = []
 
@@ -24,7 +26,10 @@ const findManifestFiles = (dir: string): string[] => {
   return manifestFiles
 }
 export function addTappletToRegistry(): RegistryUpdaterOutputs {
-  const registryManifestPath = 'tapplets-registry.manifest.json'
+  const registryManifestPath = path.join(
+    'dist',
+    TAPPLETS_REGISTRY_MANIFEST_FILE
+  )
 
   // Create an empty registry.manifest.json file if it doesn't exist
   if (!fs.existsSync(registryManifestPath)) {
