@@ -59,11 +59,12 @@ export interface RegistryManifest {
       metadata: {
         displayName: string
         author: Author
+        logoUrl: string
+        backgroundUrl: string
         about: About
         codeowners: string[]
         audits: Audits[]
         category: string
-        logoPath: string
       }
       versions: {
         [version: string]: {

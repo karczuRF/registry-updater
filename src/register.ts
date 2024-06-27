@@ -75,7 +75,8 @@ export function addTappletToRegistry(): RegistryUpdaterOutputs {
     const audits = tappletManifest.audits
     const codeowners = tappletManifest.repository.codeowners
     const category = tappletManifest.category
-    const logoPath = tappletManifest.design.logoPath
+    const logoUrl = tappletManifest.design.logoPath
+    const backgroundUrl = tappletManifest.design.backgroundPath
     const version = tappletManifest.version
     const integrity = tappletManifest.source.location.npm.integrity
     const registryUrl = tappletManifest.source.location.npm.distTarball
@@ -93,12 +94,13 @@ export function addTappletToRegistry(): RegistryUpdaterOutputs {
         id: packageName,
         metadata: {
           displayName,
+          logoUrl,
+          backgroundUrl,
           author,
           about,
           codeowners,
           audits,
-          category,
-          logoPath
+          category
         },
         versions: {
           [version]: {
